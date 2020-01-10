@@ -5,6 +5,7 @@ Project for improving Python skills
 
 ## Doing
 * get something working
+* type documenting
 
 ## Todo
 * logging
@@ -28,6 +29,7 @@ Project for improving Python skills
 
 
 
-## Notes
-Started with this: https://realpython.com/python-web-scraping-practical-introduction/
+## Resources
+https://realpython.com/python-web-scraping-practical-introduction/
+https://realpython.com/primer-on-jinja-templating/
 
