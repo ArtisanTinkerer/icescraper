@@ -1,6 +1,18 @@
 # Icescraper 
 Project for improving Python skills
 
+
+
+## Doing
+* get something working
+
+## Todo
+* logging
+* tests
+
+## Done
+
+
 ## Ideas
 * use Python to scrape weather from various sources
 * Met Office
@@ -8,6 +20,11 @@ Project for improving Python skills
 * MWIS
 * pick location (Lakes initially)
 * somehow host so can be used publicly (maybe a web project? Azure?)
+* will it rain today?
+* MetOffer? https://pypi.org/project/MetOffer/
+* radar images https://gist.github.com/JamesHarrison/58650
+* maybe make a HTML file? - upload somewhere?
+
 
 
 
