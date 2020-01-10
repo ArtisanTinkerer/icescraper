@@ -40,7 +40,14 @@ def get_met_office():
 
 def populate_template(dict_variables,results_template):
     """Render the template with the variables"""
-    print(results_template.render(**dict_variables))
+    filled_template = results_template.render(**dict_variables)
+
+    #Create a file:
+    file_name = "populated.html"
+    file = open(file_name, "w+")
+    file.write(filled_template)
+    file.close()
+
 
 
 def main():
