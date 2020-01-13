@@ -1,10 +1,12 @@
 # Icescraper 
 Project for improving Python skills
 
+https://icebreaker.azurewebsites.net/populated.html
 
 
 ## Doing
 * get something working
+* upload to ftp
 * type documenting
 
 ## Todo
@@ -15,7 +17,11 @@ Project for improving Python skills
 
 
 ## Ideas
+
+* host in Azure
+* Azure function to run scraper?
 * use Python to scrape weather from various sources
+* look for weather warnings
 * Met Office
 * BBC
 * MWIS

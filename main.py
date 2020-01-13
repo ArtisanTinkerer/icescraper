@@ -9,7 +9,7 @@ from mako.template import Template
 
 def get_met_office():
     """Get forecast for today"""
-    raw_html = scrape.simple_get('https://www.metoffice.gov.uk/weather/forecast/gcty0kf9v')
+    raw_html = scrape.simple_get('https://www.metoffice.gov.uk/weather/forecast/gcqqnw58n')
     soup = BeautifulSoup(raw_html, 'html.parser')
     tab_today = soup.find(id="tabDay0")
     # the first a is pretty much what we want
@@ -38,6 +38,37 @@ def get_met_office():
     }
 
 
+def get_bbc():
+    """Get forecast for today"""
+    raw_html = scrape.simple_get('https://www.bbc.co.uk/weather/2655708')
+    soup = BeautifulSoup(raw_html, 'html.parser')
+
+    tab_today = soup.find(id="daylink-0")
+    day_body = tab_today.find('div', class_='wr-day__body')
+
+    description = day_body.find('div', class_='wr-day__details__weather-type-description').text
+
+    min_temp = day_body.find('div', class_='wr-day-temperature__low').text
+    max_temp = day_body.find('div', class_='wr-day-temperature__high').text
+
+    return {
+        'bbc_min': min_temp,
+        'bbc_max': max_temp,
+        'bbc_summary': description,
+    }
+
+
+
+"""
+    return {
+        'met_min': min_text,
+        'met_max': max_text,
+        'met_summary': overview_text,
+    }
+"""
+
+
+
 def populate_template(dict_variables,results_template):
     """Render the template with the variables"""
     filled_template = results_template.render(**dict_variables)
@@ -53,8 +84,11 @@ def populate_template(dict_variables,results_template):
 def main():
     results_template = Template(filename='templates/results.html')
 
-    dict_variables = get_met_office()
-    populate_template(dict_variables, results_template)
+    dict_met = get_met_office()
+    dict_bbc = get_bbc()
+
+    all_variables = {**dict_met, **dict_bbc}
+    populate_template(all_variables, results_template)
 
 
 
