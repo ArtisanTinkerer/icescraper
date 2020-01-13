@@ -1,8 +1,7 @@
-# https://realpython.com/python-web-scraping-practical-introduction/
-
 import scrape
 from bs4 import BeautifulSoup
 from mako.template import Template
+from ftplib import FTP
 
 #put this in a class or module
 
@@ -57,18 +56,6 @@ def get_bbc():
         'bbc_summary': description,
     }
 
-
-
-"""
-    return {
-        'met_min': min_text,
-        'met_max': max_text,
-        'met_summary': overview_text,
-    }
-"""
-
-
-
 def populate_template(dict_variables,results_template):
     """Render the template with the variables"""
     filled_template = results_template.render(**dict_variables)
@@ -80,6 +67,21 @@ def populate_template(dict_variables,results_template):
     file.close()
 
 
+def ftp_upload():
+    """
+    Upload the populate file to Azure
+    """
+
+    ftp = FTP('ftps://waws-prod-am2-163.ftp.azurewebsites.windows.net/site/wwwroot')
+    ftp.login(user='icebreaker\$icebreaker', passwd='')
+    ftp.set_pasv(False)  # bingo :)
+
+    filename = 'populated.html'
+    ftp.storbinary('STOR '+filename, open(filename, 'rb'))
+    ftp.quit()
+
+
+
 
 def main():
     results_template = Template(filename='templates/results.html')
@@ -89,6 +91,8 @@ def main():
 
     all_variables = {**dict_met, **dict_bbc}
     populate_template(all_variables, results_template)
+
+    ftp_upload()
 
 
 
