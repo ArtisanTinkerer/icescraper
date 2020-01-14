@@ -1,17 +1,15 @@
 import scrape
 from bs4 import BeautifulSoup
 from mako.template import Template
-
 import os, uuid
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
-from dotenv import load_dotenv
-load_dotenv()
+
+import git
+#from dotenv import load_dotenv
+
+#load_dotenv()
 
 
-
-
-
-#put this in a class or module
+# put this in a class or module
 
 
 def get_met_office():
@@ -24,19 +22,19 @@ def get_met_office():
 
     str_today = str(a_today)
 
-    #DRY this up
+    # DRY this up
     max_start = str_today.find('Maximum daytime temperature: ')  # check for -1
     max_finish = str_today.find('C;', max_start) + 1  # check for -1
 
     min_start = str_today.find('Minimum nighttime temperature: ')  # check for -1
-    min_finish = str_today.find('C.', min_start)+1
+    min_finish = str_today.find('C.', min_start) + 1
 
     max_text = str_today[max_start:max_finish]
     min_text = str_today[min_start:min_finish]
 
     # text after that and stop at Sunrise
     str_sunrise = str_today.find('Sunrise')  # check for -1
-    overview_text = str_today[min_finish+1:str_sunrise]
+    overview_text = str_today[min_finish + 1:str_sunrise]
 
     return {
         'met_min': min_text,
@@ -64,11 +62,12 @@ def get_bbc():
         'bbc_summary': description,
     }
 
-def populate_template(dict_variables,results_template):
+
+def populate_template(dict_variables, results_template):
     """Render the template with the variables"""
     filled_template = results_template.render(**dict_variables)
 
-    #Create a file:
+    # Create a file:
     file_name = "populated.html"
     file = open(file_name, "w+")
     file.write(filled_template)
@@ -77,36 +76,55 @@ def populate_template(dict_variables,results_template):
 
 def upload():
     """
-    Upload the populate file to Azure
-    https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-python
     """
-    connection_string = os.getenv("CONNECTION_STRING")
 
-    try:
-        print("Azure Blob storage v12 - Python quickstart sample")
-        # Quick start code goes here
-        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+    COMMITS_TO_PRINT = 5
 
-        blob_client = blob_service_client.get_blob_client(container='csb45d625ffeec5x40a6xbee', blob='populated.html')
+    # https://www.fullstackpython.com/blog/first-steps-gitpython.html
+    # https://github.com/ArtisanTinkerer/icescraper.git
 
-        with open('populated.html', "rb") as data:
-            blob_client.upload_blob(data)
+    repo_path = "C:\\Users\\mick.byrne\\PycharmProjects\\icescraper"
+    repo = git.Repo(os.getcwd())
+    files = repo.git.diff(None, name_only=True)
+    for f in files.split('\n'):
+        repo.git.add(f)
 
-    except Exception as ex:
-        print('Exception:')
-        print(ex)
+    repo.git.commit('-m', 'test commit', author='phpmick@gmail.com')
+
+"""
+    repo = Repo(repo_path)
+    # check that the repository loaded correctly
+    if not repo.bare:
+        print('Repo at {} successfully loaded.'.format(repo_path))
+        print_repository(repo)
+        # create list of commits then print some of them to stdout
+        commits = list(repo.iter_commits('master'))[:COMMITS_TO_PRINT]
+        for commit in commits:
+            print_commit(commit)
+            pass
+    else:
+        print('Could not load repository at {} :('.format(repo_path))
+
+    # filename = 'populated.html'
+"""
+
+def print_repository(repo):
+    print('Repo description: {}'.format(repo.description))
+    print('Repo active branch is {}'.format(repo.active_branch))
+    for remote in repo.remotes:
+        print('Remote named "{}" with URL "{}"'.format(remote, remote.url))
+    print('Last commit for repo is {}.'.format(str(repo.head.commit.hexsha)))
 
 
-
-
-
-
-
-    #filename = 'populated.html'
-
-
-
-
+def print_commit(commit):
+    print('----')
+    print(str(commit.hexsha))
+    print("\"{}\" by {} ({})".format(commit.summary,
+                                     commit.author.name,
+                                     commit.author.email))
+    print(str(commit.authored_datetime))
+    print(str("count: {} and size: {}".format(commit.count(),
+                                              commit.size)))
 
 
 def main():
@@ -121,9 +139,4 @@ def main():
     upload()
 
 
-
-
 main()
-
-
-
