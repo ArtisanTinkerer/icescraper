@@ -91,6 +91,10 @@ def upload():
 
     repo.git.commit('-m', 'test commit', author='phpmick@gmail.com')
 
+    origin = repo.remote(name='origin')
+    origin.push()
+
+
 """
     repo = Repo(repo_path)
     # check that the repository loaded correctly
@@ -108,23 +112,6 @@ def upload():
     # filename = 'populated.html'
 """
 
-def print_repository(repo):
-    print('Repo description: {}'.format(repo.description))
-    print('Repo active branch is {}'.format(repo.active_branch))
-    for remote in repo.remotes:
-        print('Remote named "{}" with URL "{}"'.format(remote, remote.url))
-    print('Last commit for repo is {}.'.format(str(repo.head.commit.hexsha)))
-
-
-def print_commit(commit):
-    print('----')
-    print(str(commit.hexsha))
-    print("\"{}\" by {} ({})".format(commit.summary,
-                                     commit.author.name,
-                                     commit.author.email))
-    print(str(commit.authored_datetime))
-    print(str("count: {} and size: {}".format(commit.count(),
-                                              commit.size)))
 
 
 def main():
