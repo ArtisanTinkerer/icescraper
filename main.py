@@ -91,6 +91,9 @@ def upload():
 
     repo.git.commit('-m', 'test commit', author='phpmick@gmail.com')
 
+    repo.config_writer().set_value("user", "name", "phpmick@gmail.com").release()
+    repo.config_writer().set_value("user", "email", "phpmick@gmail.com").release()
+
     origin = repo.remote(name='origin')
     origin.push()
 
