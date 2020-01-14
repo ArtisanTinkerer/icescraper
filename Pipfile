@@ -6,9 +6,10 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-requests = "*"
-beautifulsoup4 = "*"
+python-dotenv = "*"
+bs4 = "*"
 mako = "*"
+azure-storage-blob = "*"
 
 [requires]
 python_version = "3.7"

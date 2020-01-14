@@ -1,7 +1,15 @@
 import scrape
 from bs4 import BeautifulSoup
 from mako.template import Template
-from ftplib import FTP
+
+import os, uuid
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+from dotenv import load_dotenv
+load_dotenv()
+
+
+
+
 
 #put this in a class or module
 
@@ -67,18 +75,36 @@ def populate_template(dict_variables,results_template):
     file.close()
 
 
-def ftp_upload():
+def upload():
     """
     Upload the populate file to Azure
+    https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-python
     """
+    connection_string = os.getenv("CONNECTION_STRING")
 
-    ftp = FTP('ftps://waws-prod-am2-163.ftp.azurewebsites.windows.net/site/wwwroot')
-    ftp.login(user='icebreaker\$icebreaker', passwd='')
-    ftp.set_pasv(False)  # bingo :)
+    try:
+        print("Azure Blob storage v12 - Python quickstart sample")
+        # Quick start code goes here
+        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
-    filename = 'populated.html'
-    ftp.storbinary('STOR '+filename, open(filename, 'rb'))
-    ftp.quit()
+        blob_client = blob_service_client.get_blob_client(container='csb45d625ffeec5x40a6xbee', blob='populated.html')
+
+        with open('populated.html', "rb") as data:
+            blob_client.upload_blob(data)
+
+    except Exception as ex:
+        print('Exception:')
+        print(ex)
+
+
+
+
+
+
+
+    #filename = 'populated.html'
+
+
 
 
 
@@ -92,7 +118,7 @@ def main():
     all_variables = {**dict_met, **dict_bbc}
     populate_template(all_variables, results_template)
 
-    ftp_upload()
+    upload()
 
 
 
