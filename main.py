@@ -1,13 +1,13 @@
 import scrape
 from bs4 import BeautifulSoup
 from mako.template import Template
+
 import os, uuid
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, ContentSettings
 
-import git
-#from dotenv import load_dotenv
 
-#load_dotenv()
-
+from dotenv import load_dotenv
+load_dotenv()
 
 # put this in a class or module
 
@@ -74,47 +74,31 @@ def populate_template(dict_variables, results_template):
     file.close()
 
 
-def upload():
+def upload_azure():
     """
+    Upload to Azure using FTP
+    https://github.com/Azure/azure-sdk-for-python/blob/master/sdk/storage/azure-storage-blob/azure/storage/blob/_blob_client.py#L375
     """
 
-    COMMITS_TO_PRINT = 5
+    az_key = os.getenv("AZ_STORAGE_KEY")
+    az_string = os.getenv("AZ_STORAGE_CONNECTION_STRING")
+    container_name = '$web'
+    local_file_name = 'index.html'
 
-    # https://www.fullstackpython.com/blog/first-steps-gitpython.html
-    # https://github.com/ArtisanTinkerer/icescraper.git
+    try:
+        print("Azure Blob storage v12 - Python quickstart sample")
 
-    repo_path = "C:\\Users\\mick.byrne\\PycharmProjects\\icescraper"
-    repo = git.Repo(os.getcwd())
-    files = repo.git.diff(None, name_only=True)
-    for f in files.split('\n'):
-        repo.git.add(f)
+        blob_service_client = BlobServiceClient.from_connection_string(az_string)
+        blob_client = blob_service_client.get_blob_client(container=container_name, blob=local_file_name)
+        print("\nUploading to Azure Storage as blob:\n\t" + local_file_name)
+        my_content_settings = ContentSettings(content_type='text/html')
 
-    repo.git.commit('-m', 'test commit', author='phpmick@gmail.com')
+        with open('populated.html', "rb") as data:
+            blob_client.upload_blob(data, overwrite=True, content_settings=my_content_settings)
 
-    repo.config_writer().set_value("user", "name", "phpmick@gmail.com").release()
-    repo.config_writer().set_value("user", "email", "phpmick@gmail.com").release()
-
-    origin = repo.remote(name='origin')
-    origin.push()
-
-
-"""
-    repo = Repo(repo_path)
-    # check that the repository loaded correctly
-    if not repo.bare:
-        print('Repo at {} successfully loaded.'.format(repo_path))
-        print_repository(repo)
-        # create list of commits then print some of them to stdout
-        commits = list(repo.iter_commits('master'))[:COMMITS_TO_PRINT]
-        for commit in commits:
-            print_commit(commit)
-            pass
-    else:
-        print('Could not load repository at {} :('.format(repo_path))
-
-    # filename = 'populated.html'
-"""
-
+    except Exception as ex:
+        print('Exception:')
+        print(ex)
 
 
 def main():
@@ -126,7 +110,7 @@ def main():
     all_variables = {**dict_met, **dict_bbc}
     populate_template(all_variables, results_template)
 
-    upload()
+    upload_azure()
 
 
 main()
