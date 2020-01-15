@@ -1,12 +1,11 @@
 # Icescraper 
 Project for improving Python skills
 
-https://icebreaker.azurewebsites.net/populated.html
+https://icescraper.z6.web.core.windows.net/
 
 
 ## Doing
-* get something working
-* upload to ftp
+
 * type documenting
 
 ## Todo
@@ -14,23 +13,25 @@ https://icebreaker.azurewebsites.net/populated.html
 * tests
 
 ## Done
-
-
-## Ideas
-
-* host in Azure
-* Azure function to run scraper?
+* get something working
+* upload
+* results are hosted on Azure storage as a static seit
 * use Python to scrape weather from various sources
-* look for weather warnings
 * Met Office
 * BBC
-* MWIS
-* pick location (Lakes initially)
 * somehow host so can be used publicly (maybe a web project? Azure?)
+* maybe make a HTML file? - upload somewhere?
+## Ideas
+
+
+* Azure function to run scraper?
+* look for weather warnings
+* MWIS
+* pick location
 * will it rain today?
 * MetOffer? https://pypi.org/project/MetOffer/
 * radar images https://gist.github.com/JamesHarrison/58650
-* maybe make a HTML file? - upload somewhere?
+
 
 
 

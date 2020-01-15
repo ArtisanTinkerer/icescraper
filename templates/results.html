@@ -1,38 +1,76 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
+    <!-- Required meta tags -->
+    <!--<meta charset="utf-8">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <title>Project Icescraper</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <style type="text/css">
-      .container {
-        max-width: 500px;
-        padding-top: 100px;
-      }
-    </style>
   </head>
   <body>
 
+
+
+  <div class="jumbotron">
+    <h1 class="display-4">Project Icescraper</h1>
+  </div>
+
   <!--Scraped from websites-->
+  <div class="container">
 
-    <div class="container">
-      <h1>Met Office</h1>
-      <p>${met_min}</p>
-      <p>${met_max}</p>
-      <p>${met_summary}</p>
+    <!--Met Office-->
+    <div class="card text-center" style="width: 18rem;">
+
+      <div class="card-header bg-primary text-white">
+        Met Office
+      </div>
+
+      <div class="card-body">
+
+        <div class="card-text">
+          <p>${met_min}</p>
+          <p>${met_max}</p>
+          <p>${met_summary}</p>
+        </div>
+
+        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+      </div>
+    </div>
+
+    <br>
+
+    <!--BBC-->
+    <div class="card text-center" style="width: 18rem;">
+
+      <div class="card-header bg-primary text-white">
+        BBC
+      </div>
+
+      <div class="card-body">
+        <div class="card-text">
+          <p>${bbc_min}</p>
+          <p>${bbc_max}</p>
+          <p>${bbc_summary}</p>
+        </div>
+
+        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+      </div>
     </div>
 
 
-    <div class="container">
-      <h1>BBC</h1>
-      <p>${bbc_min}</p>
-      <p>${bbc_max}</p>
-      <p>${bbc_summary}</p>
-    </div>
+  </div>
 
 
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 </html>
+
+
+

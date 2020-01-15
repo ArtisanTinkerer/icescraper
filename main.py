@@ -5,7 +5,7 @@ from mako.template import Template
 import os, uuid
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, ContentSettings
 
-
+import winsound
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -100,6 +100,10 @@ def upload_azure():
         print('Exception:')
         print(ex)
 
+def beep():
+    frequency = 2500  # Set Frequency To 2500 Hertz
+    duration = 100  # Set Duration To 1000 ms == 1 second
+    winsound.Beep(frequency, duration)
 
 def main():
     results_template = Template(filename='templates/results.html')
@@ -111,6 +115,9 @@ def main():
     populate_template(all_variables, results_template)
 
     upload_azure()
+    beep()
+
+
 
 
 main()
