@@ -7,6 +7,9 @@ https://icescraper.z6.web.core.windows.net/
 ## Doing
 
 * type documenting
+* add updated at field
+* refactoring
+* how to update? Azure function?
 
 ## Todo
 * logging
@@ -21,9 +24,8 @@ https://icescraper.z6.web.core.windows.net/
 * BBC
 * somehow host so can be used publicly (maybe a web project? Azure?)
 * maybe make a HTML file? - upload somewhere?
+
 ## Ideas
-
-
 * Azure function to run scraper?
 * look for weather warnings
 * MWIS
