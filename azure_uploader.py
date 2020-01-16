@@ -12,10 +12,9 @@ def upload(local_file_name):
     container_name = '$web'
 
     try:
-        print("Azure Blob storage v12 - Python quickstart sample")
-
         blob_service_client = BlobServiceClient.from_connection_string(az_string)
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=local_file_name)
+
         print("\nUploading to Azure Storage as blob:\n\t" + local_file_name)
         my_content_settings = ContentSettings(content_type='text/html')
 

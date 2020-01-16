@@ -6,15 +6,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def beep():
-    """
-    Just make a squeak when complete
-    """
-    frequency = 2500  # Set Frequency To 2500 Hertz
-    duration = 100  # Set Duration To 1000 ms == 1 second
-    winsound.Beep(frequency, duration)
-
-
 def main():
     """
     Scrape the weather data.
@@ -26,8 +17,9 @@ def main():
     all_variables = {**dict_met, **dict_bbc}
 
     templater.populate_template(all_variables, 'templates/results.html')
-
     azure_uploader.upload('index.html')
-    beep()
+
+    winsound.Beep(2500, 100)
+
 
 main()
