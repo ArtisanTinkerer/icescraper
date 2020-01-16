@@ -1,21 +1,18 @@
 # Icescraper 
 Project for improving Python skills
 
-https://icescraper.z6.web.core.windows.net/
-
-
 ## Doing
-
-* type documenting
-* add updated at field
-* refactoring
 * how to update? Azure function?
 
 ## Todo
+
 * logging
 * tests
 
 ## Done
+* type documenting
+* add updated at field
+* refactoring
 * get something working
 * upload
 * results are hosted on Azure storage as a static seit

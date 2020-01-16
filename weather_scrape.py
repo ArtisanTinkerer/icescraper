@@ -1,7 +1,8 @@
 import scrape
 from bs4 import BeautifulSoup
 
-def get_met_office():
+
+def get_met_office() -> dict:
     """Get forecast for today"""
     raw_html = scrape.simple_get('https://www.metoffice.gov.uk/weather/forecast/gcqqnw58n')
     soup = BeautifulSoup(raw_html, 'html.parser')
@@ -32,7 +33,7 @@ def get_met_office():
     }
 
 
-def get_bbc():
+def get_bbc() -> dict:
     """Get forecast for today"""
     raw_html = scrape.simple_get('https://www.bbc.co.uk/weather/2655708')
     soup = BeautifulSoup(raw_html, 'html.parser')
